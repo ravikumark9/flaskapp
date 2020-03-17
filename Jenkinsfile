@@ -46,6 +46,7 @@ pipeline {
                    }
                 }
             }
+         }
         stage('Deploy') {
             steps {
                 script {
@@ -58,7 +59,7 @@ pipeline {
                    }
                 }  
             }
-        
+      }  
     post {
         always {
             // make sure that the Docker image is removed
