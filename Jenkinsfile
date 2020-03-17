@@ -51,9 +51,9 @@ pipeline {
             steps {
                 script {
                 // Override image field in taskdef file
-                    sh "sed -i 's|{{image}}|${ECRURL}:${commit_id}|' mybni-api-test-task.json"
+                    sh "sed -i 's|{{image}}|${ECRURL}:${commit_id}|' flasktask.json"
                 // Create a new task definition revision
-                    sh "aws ecs register-task-definition --execution-role-arn ${EXEC_ROLE_URN} --cli-input-json file://mybni-api-test-task.json --region ${REGION}"
+                    sh "aws ecs register-task-definition --execution-role-arn ${EXEC_ROLE_URN} --cli-input-json file://flasktask.json --region ${REGION}"
                 // Update service on EC2
                     sh "aws ecs update-service --cluster ${CLUSTER} --service mybni-api-test-service --task-definition ${TASK_DEF_URN} --region ${REGION}"
                    }
