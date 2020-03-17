@@ -8,8 +8,8 @@ pipeline
     environment 
     {
         VERSION = 'latest'
-        PROJECT = 'flask_app'
-        IMAGE = 'flask_app:latest'
+        PROJECT = 'flaskapp'
+        IMAGE = 'flaskapp:latest'
         ECRURL = 'http://054421796104.dkr.ecr.us-east-1.amazonaws.com/flaskapp'
         ECRCRED = 'ecr:us-east-1:awscred'
     }
