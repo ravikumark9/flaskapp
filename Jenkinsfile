@@ -9,7 +9,10 @@ pipeline {
         IMAGE = 'flaskapp:latest'
         ECRURL = 'http://287481867416.dkr.ecr.us-east-1.amazonaws.com/flaskapp'
         ECRCRED = 'ecr:us-east-1:awscred'
-       
+        REGION = "us-east-1"
+        TASK_DEF_URN = "arn:aws:ecs:us-east-1:287481867416:task-definition/first-run-task-definition"
+        CLUSTER = "arn:aws:ecs:us-east-1:287481867416:cluster/default"
+        EXEC_ROLE_URN = "arn:aws:iam::287481867416:role/aws-service-role/ecs.amazonaws.com/AWSServiceRoleForECS"
     }
     stages {
       stage('Build preparations') {
@@ -17,14 +20,10 @@ pipeline {
                 script {
                     // calculate GIT lastest commit short-hash
                     commit_id = sh(script: "git rev-parse --short HEAD", returnStdout: true).trim()
-                    //shortCommitHash = gitCommitHash.take(2)
-                    //calculate a sample version tag 
-                    //VERSION = "${PROJECT}_${BUILD_ID}_${shortCommitHash}" 
-                    //hi
+                    
                     VERSION = "${PROJECT}_${commit_id}"
-                    // set the build display name
-                    //currentBuild.displayName = "#${BUILD_ID}-${VERSION}"
-                    //currentBuild.displayName = "#${VERSION}"
+                  
+                    
                     //VERSION = "${BUILD_ID}${VERSION}"
                     IMAGE = "$PROJECT:$VERSION"
                 }
@@ -47,7 +46,16 @@ pipeline {
                     }
                 }
             }
-        }
+        stage('Deploy') {
+            steps {
+                // Override image field in taskdef file
+                sh "sed -i 's|{{image}}|${ECRURL}:${commit_id}|' mybni-api-test-task.json"
+                // Create a new task definition revision
+                sh "aws ecs register-task-definition --execution-role-arn ${EXEC_ROLE_URN} --cli-input-json file://mybni-api-test-task.json --region ${REGION}"
+                // Update service on EC2
+                sh "aws ecs update-service --cluster ${CLUSTER} --service mybni-api-test-service --task-definition ${TASK_DEF_URN} --region ${REGION}"
+            }
+        }  
     }
     
     post {
