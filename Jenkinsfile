@@ -34,7 +34,7 @@ pipeline {
             steps {
                 script {
                     // Build the docker image using a Dockerfile
-                    docker.build("${ECRURL}:${commit_id}")
+                    docker.build("$IMAGE")
                 }
             }
         }
@@ -43,7 +43,7 @@ pipeline {
                 script {
                     // login to ECR 
                     docker.withRegistry("$ECRURL","$ECRCRED") {
-                        docker.image(IMAGE).push("${ECRURL}:${commit_id}")
+                        docker.image(IMAGE).push()
                     }
                 }
             }
