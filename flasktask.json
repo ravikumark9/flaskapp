@@ -1,5 +1,5 @@
 {
-    "family": "flasktask",
+    "family": "first-run-task-definition",
     "networkMode": "awsvpc",
     "containerDefinitions": [
         {
