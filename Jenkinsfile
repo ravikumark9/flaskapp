@@ -27,7 +27,7 @@ pipeline
                    //sh 'rm -rf /var/lib/jenkins/workspace/flask_hello/test/'
                    //sh 'mv /var/lib/jenkins/workspace/tests3.txt /var/lib/jenkins/workspace/flask_hello/'
                    //sh 'chown jenkins:jenkins /var/lib/jenkins/workspace/flask_pipe/tests3.txt'
-                   //hi
+                   
          //   }
        // }
     
