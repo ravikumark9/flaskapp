@@ -7,7 +7,7 @@ pipeline {
         VERSION = 'latest'
         PROJECT = 'flaskapp'
         IMAGE = 'flaskapp:latest'
-        ECRURL = 'http://721792329031.dkr.ecr.us-east-1.amazonaws.com/flaskapp'
+        ECRURL = 'http://332294502240.dkr.ecr.us-east-1.amazonaws.com/flaskapp'
         ECRCRED = 'ecr:us-east-1:awscred'
         REGION = "us-east-1"
         TASK_DEF_URN = "arn:aws:ecs:us-east-1:721792329031:task-definition/first-run-task-definition"
