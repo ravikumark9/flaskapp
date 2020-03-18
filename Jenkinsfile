@@ -12,7 +12,7 @@ pipeline {
         REGION = "us-east-1"
         TASK_DEF_URN = "arn:aws:ecs:us-east-1:721792329031:task-definition/first-run-task-definition"
         CLUSTER = "arn:aws:ecs:us-east-1:721792329031:cluster/default"
-        EXEC_ROLE_URN = "arn:aws:iam::721792329031:role/ecsTaskExecutionRole"
+        EXEC_ROLE_URN = "arn:aws:iam::721792329031:role/myecs"
     }
     stages {
       stage('Build preparations') {
