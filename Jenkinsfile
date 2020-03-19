@@ -60,10 +60,10 @@ pipeline {
              //       sh "aws ecs update-service --cluster ${CLUSTER} --service mybni-api-test-service --task-definition ${TASK_DEF_URN} --region ${REGION}"
 
                      
-                        docker.withServer("tcp://scsbbrc1c.mylabserver.com:2375", "dockerserver") {
+                        docker.withServer("tcp://172.31.22.94:2375", "dockerserver") {
                             docker.withRegistry("$ECRURL","$ECRCRED") {                            
                             docker.image(IMAGE).pull()
-                            docker.Image.run(81:80)
+                            docker.Image.run('-p 81:80')
                             }
                    }
                 }
