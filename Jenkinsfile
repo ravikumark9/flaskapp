@@ -59,15 +59,15 @@ pipeline {
                 // Update service on EC2
              //       sh "aws ecs update-service --cluster ${CLUSTER} --service mybni-api-test-service --task-definition ${TASK_DEF_URN} --region ${REGION}"
 
-                    docker.withRegistry("$ECRURL","$ECRCRED")
-                    {
+                    docker.withRegistry("$ECRURL","$ECRCRED") {
                     docker.withServer("tcp://scsbbrc1c.mylabserver.com:22", "dockerserver")
                     docker.image(IMAGE).pull()
                     docker.Image.Run(81:80)
                    }
                 }
             }
-      }  
+       } 
+    }
     post {
         always {
             // make sure that the Docker image is removed
