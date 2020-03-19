@@ -63,7 +63,8 @@ pipeline {
                         docker.withServer("tcp://172.31.22.94:2375", "dockerserver") {
                             docker.withRegistry("$ECRURL","$ECRCRED") {                            
                             docker.image(IMAGE).pull()
-                            docker.Image.run('-p 81:80')
+                  //          docker.Image.run('-p 81:80')
+                            docker.image(IMAGE).withRun('-p 81:80')
                             }
                    }
                 }
