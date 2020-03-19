@@ -61,9 +61,10 @@ pipeline {
 
                      
                         docker.withServer("tcp://scsbbrc1c.mylabserver.com:2375", "dockerserver") {
-                        docker.withRegistry("$ECRURL","$ECRCRED")
-                        docker.image(IMAGE).pull()
-                        docker.Image.Run(81:80)
+                            docker.withRegistry("$ECRURL","$ECRCRED") {                            
+                            docker.image(IMAGE).pull()
+                            docker.Image.run(81:80)
+                            }
                    }
                 }
             }
