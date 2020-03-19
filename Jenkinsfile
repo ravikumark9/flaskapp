@@ -1,5 +1,5 @@
 node {
-stage (‘Build’) {
+stage (‘Docker Build’) {
 sh ‘docker build -t testflask .’
 }
 }
