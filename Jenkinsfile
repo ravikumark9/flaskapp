@@ -65,7 +65,7 @@ pipeline {
                                docker.image(IMAGE).pull()
                             
                            //          docker.Image.run('-p 81:80')
-                               ecrimage = sh(script: 'docker images | awk {'print $3'} | head -2 | tail -1', returnStdout: true).trim()
+                               ecrimage = sh(script: 'docker images | awk {\'print $3\'} | head -2 | tail -1', returnStdout: true).trim()
                                sh "docker run -d -p 8081:8081 ${ecrimage}"
                             }
                    }
