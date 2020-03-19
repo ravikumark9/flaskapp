@@ -48,9 +48,9 @@ pipeline {
                 }
             }
          }
-       // stage('Deploy') {
-        //    steps {
-           //     script {
+        stage('Deploy') {
+            steps {
+                script {
                 // Override image field in taskdef file
                 //    sh "sed -i 's|{{image}}|${ECRURL}:${commit_id}|' flasktask.json"
                 // Create a new task definition revision
@@ -61,6 +61,12 @@ pipeline {
              //      }
             //    }  
         //    }
+                    docker.withRegistry("$ECRURL","$ECRCRED")
+                    {
+                    docker.withServer("tcp://scsbbrc1c.mylabserver.com:22", "dockerserver")
+                    docker.image(IMAGE).pull()
+                    docker.Image.Run(81:80)
+                   }
       }  
     post {
         always {
