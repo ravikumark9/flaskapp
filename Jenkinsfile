@@ -51,19 +51,19 @@ pipeline {
                 }
             }
          }
-        stage('Deploy') {
-            steps {
-                script {
+       // stage('Deploy') {
+       //     steps {
+      //          script {
                //  Override image field in taskdef file
-                    sh "sed -i 's|{{image}}|${ECRURL}:${commit_id}|' flasktask.json"
+      //              sh "sed -i 's|{{image}}|${ECRURL}:${commit_id}|' flasktask.json"
                //  Create a new task definition revision
                //     sh "aws ecs register-task-definition --execution-role-arn ${EXEC_ROLE_URN} --cli-input-json file://flasktask.json --region ${REGION}"
-                      sh "aws ecs register-task-definition --family ${FAMILY} --cli-input-json file://flasktask.json --region ${REGION}"
+        //              sh "aws ecs register-task-definition --family ${FAMILY} --cli-input-json file://flasktask.json --region ${REGION}"
                    //   SERVICES=`aws ecs describe-services --services ${SERVICE_NAME} --cluster ${CLUSTER} --region ${REGION} | jq.failures[]`
                    //	  REVISION=`aws ecs describe-task-definition --task-definition ${NAME} --region ${REGION} | jq.taskDefiniton.revision`
 
              //    Update service on EC2
-                    sh "aws ecs update-service --cluster ${CLUSTER} --service ecr-ecs-service --task-definition ${TASK_DEF_URN} --region ${REGION}"
+       //             sh "aws ecs update-service --cluster ${CLUSTER} --service ecr-ecs-service --task-definition ${TASK_DEF_URN} --region ${REGION}"
                  //     sh "aws ecs create-service --service-name ${SERVICE_NAME} --launch-type FARGATE --desired-count 1 --task-definition ${FAMILY} --cluster ${CLUSTER} --region ${REGION}"
                      
                        // docker.withServer("tcp://172.31.22.94:2375", "dockerserver") {
@@ -75,9 +75,9 @@ pipeline {
                      //          sh "docker run -d -p 8081:8081 ${ecrimage}"
                       //      }
                   // }
-                }
-            }
-       } 
+        //        }
+        //    }
+    //   } 
     }
     post {
         always {
