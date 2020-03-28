@@ -14,6 +14,7 @@ pipeline {
        // CLUSTER = "arn:aws:ecs:us-east-1:380552115531:cluster/default"
        // EXEC_ROLE_URN = "arn:aws:iam::380552115531:role/ecsTaskExecutionRole"
         FAMILY = "first-run-task-definition"
+        NAME = "ecr-ecs"
     }
     stages {
       stage('Build preparations') {
