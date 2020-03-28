@@ -7,19 +7,19 @@
             "image": "{{image}}", 
             "portMappings": [
                 {
-                    "containerPort": 8080, 
-                    "hostPort": 8080, 
+                    "containerPort": 81, 
+                    "hostPort": 81, 
                     "protocol": "tcp"
                 }
             ], 
             "essential": true, 
-            "entryPoint": [
-                "sh",
-		"-c"
-            ], 
-            "command": [
-                "/bin/sh -c \"echo hi \""
-            ]
+         //   "entryPoint": [
+         //       "sh",
+	//	"-c"
+        //    ], 
+        //    "command": [
+         //       "/bin/sh -c \"echo hi \""
+        //    ]
         }
     ], 
     "requiresCompatibilities": [
