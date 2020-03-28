@@ -12,10 +12,8 @@
                     "protocol": "tcp"
                 }
             ], 
-            "entryPoint": [
-            "sh",
-            "-c"
-            ],
+            "command": ["sleep", "10"],
+            "entryPoint": ["/"],
         }
     ], 
     "requiresCompatibilities": [
