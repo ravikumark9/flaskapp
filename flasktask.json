@@ -12,6 +12,10 @@
                     "protocol": "tcp"
                 }
             ], 
+            "entryPoint": [
+            "sh",
+            "-c"
+            ],
         }
     ], 
     "requiresCompatibilities": [
