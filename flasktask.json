@@ -17,7 +17,7 @@
             "command": ["sleep", "10"],
             "entryPoint": ["/"],
         }
-    ] 
+    ], 
     "requiresCompatibilities": [
         "FARGATE"
     ]   
