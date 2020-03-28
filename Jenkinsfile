@@ -5,8 +5,8 @@ pipeline {
     agent any
     environment {
         VERSION = 'latest'
-        PROJECT = 'ecr_ecs'
-        IMAGE = 'ecr_ecs:latest'
+        PROJECT = 'ecr-ecs'
+        IMAGE = 'ecr-ecs:latest'
         ECRURL = 'http://713150122548.dkr.ecr.us-east-1.amazonaws.com/ecr-ecs'
         ECRCRED = 'ecr:us-east-1:awscred'
         REGION = "us-east-1"
