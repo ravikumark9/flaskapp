@@ -7,12 +7,13 @@ pipeline {
         VERSION = 'latest'
         PROJECT = 'flaskapp'
         IMAGE = 'flaskapp:latest'
-        ECRURL = 'http://380552115531.dkr.ecr.us-east-1.amazonaws.com/flaskapp'
+        ECRURL = 'http://380552115531.dkr.ecr.us-east-1.amazonaws.com/ecs_ecr'
         ECRCRED = 'ecr:us-east-1:awscred'
         REGION = "us-east-1"
-        TASK_DEF_URN = "arn:aws:ecs:us-east-1:380552115531:task-definition/first-run-task-definition"
+       // TASK_DEF_URN = "arn:aws:ecs:us-east-1:380552115531:task-definition/first-run-task-definition"
         CLUSTER = "arn:aws:ecs:us-east-1:380552115531:cluster/default"
-        EXEC_ROLE_URN = "arn:aws:iam::380552115531:role/ecsTaskExecutionRole"
+       // EXEC_ROLE_URN = "arn:aws:iam::380552115531:role/ecsTaskExecutionRole"
+        FAMILY = "first-run-task-definition"
     }
     stages {
       stage('Build preparations') {
@@ -54,11 +55,14 @@ pipeline {
                //  Override image field in taskdef file
                     sh "sed -i 's|{{image}}|${ECRURL}:${commit_id}|' flasktask.json"
                //  Create a new task definition revision
-                    sh "aws ecs register-task-definition --execution-role-arn ${EXEC_ROLE_URN} --cli-input-json file://flasktask.json --region ${REGION}"
-               
-             //    Update service on EC2
-                    sh "aws ecs update-service --cluster ${CLUSTER} --service mybni-api-test-service --task-definition ${TASK_DEF_URN} --region ${REGION}"
+               //     sh "aws ecs register-task-definition --execution-role-arn ${EXEC_ROLE_URN} --cli-input-json file://flasktask.json --region ${REGION}"
+                      sh "aws ecs register-task-definition --family ${FAMILY} --cli-input-json file://${WORKSPACE}/${NAME}-v_${BUILD_NUMBER}.json"
+                   //   SERVICES=`aws ecs describe-services --services ${SERVICE_NAME} --cluster ${CLUSTER} --region ${REGION} | jq.failures[]`
+                   //	  REVISION=`aws ecs describe-task-definition --task-definition ${NAME} --region ${REGION} | jq.taskDefiniton.revision`
 
+             //    Update service on EC2
+                 //   sh "aws ecs update-service --cluster ${CLUSTER} --service mybni-api-test-service --task-definition ${TASK_DEF_URN} --region ${REGION}"
+                      sh "aws ecs create-service --service-name ${SERVICE_NAME} --launch-type FARGATE --desired-count 1 --task-definition ${FAMILY} --cluster ${CLUSTER} --region ${REGION}"
                      
                        // docker.withServer("tcp://172.31.22.94:2375", "dockerserver") {
                        //     docker.withRegistry("$ECRURL","$ECRCRED") {                            
