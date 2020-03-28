@@ -12,13 +12,8 @@
                     "protocol": "tcp"
                 }
             ], 
-            "essential": true, 
-	    "entryPoint": [
-                ""
-            ],
-            "command": [
-                ""
-            ],
+         //   "essential": true, 
+	  
          //   "entryPoint": [
          //       "sh",
 	//	"-c"
