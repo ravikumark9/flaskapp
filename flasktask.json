@@ -21,7 +21,7 @@
     "revision": 4
     "requiresCompatibilities": [
         "FARGATE"
-    ]
+    ],
 }
 }
 
