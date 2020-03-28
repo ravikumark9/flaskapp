@@ -13,15 +13,21 @@
                 }
             ], 
             "essential": true, 
-            "entryPoint": [
+	    "entryPoint": [
+                ""
+            ],
+            "command": [
+                ""
+            ],
+         //   "entryPoint": [
          //       "sh",
 	//	"-c"
-		  ""
-            ], 
-            "command": [
+	//	  ""
+        //    ], 
+        //    "command": [
          //       "/bin/sh -c \"echo hi \""
-		    ""
-            ]
+	//	    ""
+         //   ]
         }
     ], 
     "requiresCompatibilities": [
