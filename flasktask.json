@@ -19,6 +19,9 @@
     ],
     "family": "first-run-task-definition",
     "revision": 4
+    "requiresCompatibilities": [
+        "FARGATE"
+    ]
 }
 }
 
