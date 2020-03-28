@@ -5,6 +5,7 @@
         {
             "cpu": "256", 
             "memory": "512",
+            "essential": true,
             "name": "ecr-ecs", 
             "image": "{{image}}", 
             "portMappings": [
@@ -15,8 +16,7 @@
                 }
             ], 
             "command": ["sleep", "10"],
-            "entryPoint": ["/"],
-            "essential": true
+            "entryPoint": ["/"]
         }
     ], 
     "requiresCompatibilities": [
