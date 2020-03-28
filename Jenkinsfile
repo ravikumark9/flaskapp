@@ -11,10 +11,11 @@ pipeline {
         ECRCRED = 'ecr:us-east-1:awscred'
         REGION = "us-east-1"
        // TASK_DEF_URN = "arn:aws:ecs:us-east-1:380552115531:task-definition/first-run-task-definition"
-       // CLUSTER = "arn:aws:ecs:us-east-1:380552115531:cluster/default"
+        CLUSTER = "arn:aws:ecs:us-east-1:713150122548:cluster/ecr-ecs"
        // EXEC_ROLE_URN = "arn:aws:iam::380552115531:role/ecsTaskExecutionRole"
         FAMILY = "first-run-task-definition"
         NAME = "ecr-ecs"
+        SERVICE_NAME = "ecr-ecs-service"
     }
     stages {
       stage('Build preparations') {
