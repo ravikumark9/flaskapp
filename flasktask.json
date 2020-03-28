@@ -15,8 +15,6 @@
                     "protocol": "tcp"
                 }
             ], 
-            "command": ["sleep", "10"],
-            "entryPoint": ["/"]
         }
     ], 
     "requiresCompatibilities": [
