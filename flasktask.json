@@ -16,6 +16,7 @@
             ], 
             "command": ["sleep", "10"],
             "entryPoint": ["/"],
+            "essential": true
         }
     ], 
     "requiresCompatibilities": [
