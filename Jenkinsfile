@@ -57,7 +57,7 @@ pipeline {
                     sh "sed -i 's|{{image}}|${ECRURL}:${commit_id}|' flasktask.json"
                //  Create a new task definition revision
                //     sh "aws ecs register-task-definition --execution-role-arn ${EXEC_ROLE_URN} --cli-input-json file://flasktask.json --region ${REGION}"
-                      sh "aws ecs register-task-definition --family ${FAMILY} --cli-input-json file://${WORKSPACE}/${NAME}-v_${BUILD_NUMBER}.json"
+                      sh "aws ecs register-task-definition --family ${FAMILY} --cli-input-json file://flasktask.json"
                    //   SERVICES=`aws ecs describe-services --services ${SERVICE_NAME} --cluster ${CLUSTER} --region ${REGION} | jq.failures[]`
                    //	  REVISION=`aws ecs describe-task-definition --task-definition ${NAME} --region ${REGION} | jq.taskDefiniton.revision`
 
