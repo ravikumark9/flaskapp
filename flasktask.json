@@ -24,12 +24,7 @@
     }
   ],
 
-  "memory": "512",
-  "compatibilities": [
-    "EC2",
-    "FARGATE"
-  ],
-  
+  "memory": "512",  
   "family": "first-run-task-definition",
   "requiresCompatibilities": [
     "FARGATE"
