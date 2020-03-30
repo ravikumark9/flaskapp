@@ -8,7 +8,7 @@ pipeline {
         PROJECT = 'ecr-ecs'
         IMAGE = 'ecr-ecs:latest'
         ECRURL = 'http://286339738813.dkr.ecr.us-east-1.amazonaws.com/ecr-ecs'
-	ECRURN = '286339738813.dkr.ecr.us-east-1.amazonaws.com/ecr-ecs'
+	ECRURN = '286339738813.dkr.ecr.us-east-1.amazonaws.com/ecr-ecs/'
         ECRCRED = 'ecr:us-east-1:awscred'
         REGION = "us-east-1"
         TASK_DEF_URN = "arn:aws:ecs:us-east-1:286339738813:task-definition/first-run-task-definition"
@@ -56,7 +56,7 @@ pipeline {
             steps {
                script {
                //  Override image field in taskdef file
-                    sh "sed -i 's|{{image}}|${ECRURN}:${commit_id}|' flasktask.json"
+                    sh "sed -i 's|{{image}}|${ECRURN}:ecr-ecs_${commit_id}|' flasktask.json"
                //  Create a new task definition revision
                //     sh "aws ecs register-task-definition --execution-role-arn ${EXEC_ROLE_URN} --cli-input-json file://flasktask.json --region ${REGION}"
                     sh "aws ecs register-task-definition --execution-role-arn ${EXEC_ROLE_URN} --family ${FAMILY} --cli-input-json file://flasktask.json --region ${REGION}"
