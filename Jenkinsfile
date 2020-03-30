@@ -71,7 +71,8 @@ pipeline {
           		if ["$SERVICES" == ""];then
 		          echo "entered existing service"
 	                  DESIRED_COUNT=`aws ecs describe-services --cluster ${CLUSTER} --services ${SERVICE_NAME} --region ${REGION} | egrep "desiredCount" | tr "/" " " | awk '{print $2}' | sed 's/,$//'  | tail -1`
-	                  if [${DESIRED_COUNT}="0"];then
+	                  echo $DESIRED_COUNT
+			  if [${DESIRED_COUNT}="0"];then
 	                    DESIRED_COUNT="2"
 	                  fi
 	                    aws ecs update-service --cluster ${CLUSTER} --region ${REGION} --service ${SERVICE_NAME} --task-definition ${FAMILY}:${REVISION} --desired-count ${DESIRED_COUNT}
