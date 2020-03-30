@@ -65,7 +65,7 @@ pipeline {
                             returnStdout: true
                     ).trim()
 		
-		       sh "aws ecs update-service --cluster ${CLUSTER} --region ${REGION} --service ${SERVICE_NAME} --task-definition ${FAMILY}:${REVISION} --desired-count 1"
+		       sh "aws ecs update-service --force-new-deployment --cluster ${CLUSTER} --region ${REGION} --service ${SERVICE_NAME} --task-definition ${FAMILY}:${REVISION} --desired-count 1"
                   //    sh "aws ecs create-service --service-name ${SERVICE_NAME} --launch-type FARGATE --desired-count 1 --task-definition ${FAMILY} --cluster ${CLUSTER} --region ${REGION}"
                      
                        // docker.withServer("tcp://172.31.22.94:2375", "dockerserver") {
