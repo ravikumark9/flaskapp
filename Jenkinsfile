@@ -36,7 +36,7 @@ pipeline {
             steps {
                 script {
                     // Build the docker image using a Dockerfile
-                    docker.build("$IMAGE")
+                    docker.build("$IMAGE","--no-cache .")
                 }
             }
         }
