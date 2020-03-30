@@ -73,13 +73,14 @@ pipeline {
 	                  DESIRED_COUNT=`aws ecs describe-services --cluster ${CLUSTER} --services ${SERVICE_NAME} --region ${REGION} | egrep "desiredCount" | tr "/" " " | awk '{print $2}' | sed 's/,$//'  | tail -1`
 	                  echo $DESIRED_COUNT
 			  if [${DESIRED_COUNT}="0"];then
-	                    DESIRED_COUNT="2"
-	                  fi
-	                    aws ecs update-service --cluster ${CLUSTER} --region ${REGION} --service ${SERVICE_NAME} --task-definition ${FAMILY}:${REVISION} --desired-count ${DESIRED_COUNT}
-	                  else
-	                    echo "entered new service"
+	                  //  DESIRED_COUNT="2"
+	                  
 	                    aws ecs create-service --service-name ${SERVICE_NAME} --launch-type FARGATE --desired-count 1 --task-definition ${FAMILY} --cluster ${CLUSTER} --region ${REGION}
-                         fi
+                          fi
+			    else
+	                    echo "entered new service"
+			    aws ecs update-service --cluster ${CLUSTER} --region ${REGION} --service ${SERVICE_NAME} --task-definition ${FAMILY}:${REVISION} --desired-count ${DESIRED_COUNT}
+	                    fi
                      '''.stripIndent())  
 		 //      sh "aws ecs update-service --cluster ${CLUSTER} --region ${REGION} --service ${SERVICE_NAME} --task-definition ${FAMILY}:${REVISION} --desired-count 1"
                  //     sh "aws ecs create-service --service-name ${SERVICE_NAME} --launch-type FARGATE --desired-count 1 --task-definition ${FAMILY} --cluster ${CLUSTER} --region ${REGION}"
