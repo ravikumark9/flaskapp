@@ -70,7 +70,7 @@ pipeline {
                     sh(returnStdout: true, script: '''#!/bin/bash
           		if ["$SERVICES" == ""];then
 		          echo "entered existing service"
-	                  DESIRED_COUNT=`aws ecs describe-services --cluster ${CLUSTER} --services ${SERVICE_NAME} | egrep "desiredCount" | tr "/" " " | awk '{print $2}' | sed 's/,$//'  | tail -1`
+	                  DESIRED_COUNT=`aws ecs describe-services --cluster ${CLUSTER} --services ${SERVICE_NAME} --region ${REGION} | egrep "desiredCount" | tr "/" " " | awk '{print $2}' | sed 's/,$//'  | tail -1`
 	                  if [${DESIRED_COUNT}="0"];then
 	                    DESIRED_COUNT="2"
 	                  fi
