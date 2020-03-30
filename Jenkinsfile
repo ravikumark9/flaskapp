@@ -63,7 +63,7 @@ pipeline {
                    //	  REVISION=`aws ecs describe-task-definition --task-definition ${NAME} --region ${REGION} | jq.taskDefiniton.revision`
                // Get latest version
 	              //   REVISION = sh "aws ecs describe-task-definition --task-definition ${NAME} --region ${REGION} | "egrep "revision" | tr "/" " " | awk '{print $2}' | sed 's/"$//'"
-                      REVISION = sh "aws ecs describe-task-definition --task-definition ${NAME} --region ${REGION} |  script: "egrep "revision" | tr "/" " " | awk '{print $2}' | sed 's/"$//'", returnStdout: true).trim()""
+                      REVISION = sh(script: "aws ecs describe-task-definition --task-definition ${NAME} --region ${REGION} | egrep "revision" | tr "/" " " | awk '{print $2}' | sed 's/"$//'", returnStdout: true).trim()
 
 		       //    Update service on EC2
                    // sh "aws ecs update-service --cluster ${CLUSTER} --service ecr-ecs-service --task-definition ${TASK_DEF_URN} --region ${REGION}"
