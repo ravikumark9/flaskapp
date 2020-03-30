@@ -74,7 +74,7 @@ pipeline {
 	                  if [${DESIRED_COUNT}="0"];then
 	                    DESIRED_COUNT="2"
 	                  fi
-	                    aws ecs update-service --cluster ${CLUSTER} --region ${REGION} --service ${SERVICE_NAME} -- task-definiton ${FAMILY}:${REVISION} --desired-count ${DESIRED_COUNT}
+	                    aws ecs update-service --cluster ${CLUSTER} --region ${REGION} --service ${SERVICE_NAME} --task-definition ${FAMILY}:${REVISION} --desired-count ${DESIRED_COUNT}
 	                  else
 	                    echo "entered new service"
 	                    aws ecs create-service --service-name ${SERVICE_NAME} --launch-type FARGATE --desired-count 1 --task-definition ${FAMILY} --cluster ${CLUSTER} --region ${REGION}
