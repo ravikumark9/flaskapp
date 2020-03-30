@@ -66,7 +66,7 @@ pipeline {
 	
              //    Update service on EC2
                    // sh "aws ecs update-service --cluster ${CLUSTER} --service ecr-ecs-service --task-definition ${TASK_DEF_URN} --region ${REGION}"
-                      aws ecs update-service --cluster ${CLUSTER} --region ${REGION} --service ${SERVICE_NAME} -- task-definiton ${FAMILY}:${REVISION}
+                      sh "aws ecs update-service --cluster ${CLUSTER} --region ${REGION} --service ${SERVICE_NAME} -- task-definiton ${FAMILY}:${REVISION}"
                  //     sh "aws ecs create-service --service-name ${SERVICE_NAME} --launch-type FARGATE --desired-count 1 --task-definition ${FAMILY} --cluster ${CLUSTER} --region ${REGION}"
                      
                        // docker.withServer("tcp://172.31.22.94:2375", "dockerserver") {
