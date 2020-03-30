@@ -7,11 +7,11 @@ pipeline {
         VERSION = 'latest'
         PROJECT = 'ecr-ecs'
         IMAGE = 'ecr-ecs:latest'
-        ECRURL = 'http://771991618262.dkr.ecr.us-east-1.amazonaws.com/ecr-ecs'
+        ECRURL = 'http://906996567172.dkr.ecr.us-east-1.amazonaws.com/ecr-ecs'
         ECRCRED = 'ecr:us-east-1:awscred'
         REGION = "us-east-1"
-        TASK_DEF_URN = "arn:aws:ecs:us-east-1:771991618262:task-definition/first-run-task-definition"
-        CLUSTER = "arn:aws:ecs:us-east-1:771991618262:cluster/ecr-ecs"
+        TASK_DEF_URN = "arn:aws:ecs:us-east-1:906996567172:task-definition/first-run-task-definition"
+        CLUSTER = "arn:aws:ecs:us-east-1:906996567172:cluster/ecr-ecs"
        // EXEC_ROLE_URN = "arn:aws:iam::380552115531:role/ecsTaskExecutionRole"
         FAMILY = "first-run-task-definition"
         NAME = "ecr-ecs"
