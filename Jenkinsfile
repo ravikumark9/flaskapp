@@ -8,7 +8,7 @@ pipeline {
         PROJECT = 'ecr-ecs'
         IMAGE = 'ecr-ecs:latest'
         ECRURL = 'http://286339738813.dkr.ecr.us-east-1.amazonaws.com/ecr-ecs'
-	ECRURN = '286339738813.dkr.ecr.us-east-1.amazonaws.com/ecr-ecs/'
+	ECRURN = '286339738813.dkr.ecr.us-east-1.amazonaws.com/ecr-ecs'
         ECRCRED = 'ecr:us-east-1:awscred'
         REGION = "us-east-1"
         TASK_DEF_URN = "arn:aws:ecs:us-east-1:286339738813:task-definition/first-run-task-definition"
