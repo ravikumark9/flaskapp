@@ -62,9 +62,8 @@ pipeline {
                    //   SERVICES=`aws ecs describe-services --services ${SERVICE_NAME} --cluster ${CLUSTER} --region ${REGION} | jq.failures[]`
                    //	  REVISION=`aws ecs describe-task-definition --task-definition ${NAME} --region ${REGION} | jq.taskDefiniton.revision`
                // Get latest version
-	              //   REVISION = sh "aws ecs describe-task-definition --task-definition ${NAME} --region ${REGION} | "egrep "revision" | tr "/" " " | awk '{print $2}' | sed 's/"$//'"
-                     REVISION = sh(script: "aws ecs describe-task-definition --task-definition ${NAME} --region ${REGION} | egrep \"revision\" | tr \"/\" \" \" | awk '{print $2}' | sed 's/\"$//'", returnStdout: true).trim()
-
+	              REVISION = sh "aws ecs describe-task-definition --task-definition ${NAME} --region ${REGION} | jq '.taskDefinition.revision'"
+		       
 		       //    Update service on EC2
                    // sh "aws ecs update-service --cluster ${CLUSTER} --service ecr-ecs-service --task-definition ${TASK_DEF_URN} --region ${REGION}"
                       sh "aws ecs update-service --cluster ${CLUSTER} --region ${REGION} --service ${SERVICE_NAME} -- task-definiton ${FAMILY}:${REVISION}"
