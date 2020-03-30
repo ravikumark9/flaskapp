@@ -12,6 +12,7 @@ pipeline {
         REGION = "us-east-1"
         TASK_DEF_URN = "arn:aws:ecs:us-east-1:286339738813:task-definition/first-run-task-definition"
         CLUSTER = "arn:aws:ecs:us-east-1:286339738813:cluster/ecr-ecs"
+	EXEC_ROLE_URN = "arn:aws:iam::286339738813:role/ecsTaskExecutionRole"
         FAMILY = "first-run-task-definition"
         NAME = "ecr-ecs"
         SERVICE_NAME = "ecr-ecs-service"
@@ -57,7 +58,7 @@ pipeline {
                     sh "sed -i 's|{{image}}|${ECRURL}:${commit_id}|' flasktask.json"
                //  Create a new task definition revision
                //     sh "aws ecs register-task-definition --execution-role-arn ${EXEC_ROLE_URN} --cli-input-json file://flasktask.json --region ${REGION}"
-                    sh "aws ecs register-task-definition --family ${FAMILY} --cli-input-json file://flasktask.json --region ${REGION}"
+                    sh "aws ecs register-task-definition --execution-role-arn ${EXEC_ROLE_URN} --family ${FAMILY} --cli-input-json file://flasktask.json --region ${REGION}"
                // Get latest version
 	       //       REVISION=$(aws ecs describe-task-definition --task-definition ${FAMILY} --region ${REGION} | jq '.taskDefinition.revision')
 		    REVISION = sh (
