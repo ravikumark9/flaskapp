@@ -64,25 +64,8 @@ pipeline {
                             script: "aws ecs describe-task-definition --task-definition ${FAMILY} --region ${REGION} | jq '.taskDefinition.revision'",
                             returnStdout: true
                     ).trim()
-		   //    echo $REVISION
-		       //    Update service on EC2
-                   // sh "aws ecs update-service --cluster ${CLUSTER} --service ecr-ecs-service --task-definition ${TASK_DEF_URN} --region ${REGION}"
-                    sh(returnStdout: true, script: '''#!/bin/bash
-          		if ["$SERVICES" == ""];then
-		          echo "entered existing service"
-	                  DESIRED_COUNT=`aws ecs describe-services --cluster ${CLUSTER} --services ${SERVICE_NAME} --region ${REGION} | egrep "desiredCount" | tr "/" " " | awk '{print $2}' | sed 's/,$//'  | tail -1`
-	                  echo $DESIRED_COUNT
-			  if [${DESIRED_COUNT}="0"];then
-	                  //  DESIRED_COUNT="2"
-	                  
-	                    aws ecs create-service --service-name ${SERVICE_NAME} --launch-type FARGATE --desired-count 1 --task-definition ${FAMILY} --cluster ${CLUSTER} --region ${REGION}
-                          fi
-			    else
-	                    echo "entered new service"
-			    aws ecs update-service --cluster ${CLUSTER} --region ${REGION} --service ${SERVICE_NAME} --task-definition ${FAMILY}:${REVISION} --desired-count ${DESIRED_COUNT}
-	                    fi
-                     '''.stripIndent())  
-		 //      sh "aws ecs update-service --cluster ${CLUSTER} --region ${REGION} --service ${SERVICE_NAME} --task-definition ${FAMILY}:${REVISION} --desired-count 1"
+		
+		       sh "aws ecs update-service --cluster ${CLUSTER} --region ${REGION} --service ${SERVICE_NAME} --task-definition ${FAMILY}:${REVISION} --desired-count 1"
                  //     sh "aws ecs create-service --service-name ${SERVICE_NAME} --launch-type FARGATE --desired-count 1 --task-definition ${FAMILY} --cluster ${CLUSTER} --region ${REGION}"
                      
                        // docker.withServer("tcp://172.31.22.94:2375", "dockerserver") {
