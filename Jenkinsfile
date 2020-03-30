@@ -12,7 +12,6 @@ pipeline {
         REGION = "us-east-1"
         TASK_DEF_URN = "arn:aws:ecs:us-east-1:906996567172:task-definition/first-run-task-definition"
         CLUSTER = "arn:aws:ecs:us-east-1:906996567172:cluster/ecr-ecs"
-       // EXEC_ROLE_URN = "arn:aws:iam::380552115531:role/ecsTaskExecutionRole"
         FAMILY = "first-run-task-definition"
         NAME = "ecr-ecs"
         SERVICE_NAME = "ecr-ecs-service"
@@ -58,19 +57,30 @@ pipeline {
                     sh "sed -i 's|{{image}}|${ECRURL}:${commit_id}|' flasktask.json"
                //  Create a new task definition revision
                //     sh "aws ecs register-task-definition --execution-role-arn ${EXEC_ROLE_URN} --cli-input-json file://flasktask.json --region ${REGION}"
-                      sh "aws ecs register-task-definition --family ${FAMILY} --cli-input-json file://flasktask.json --region ${REGION}"
-                   //   SERVICES=`aws ecs describe-services --services ${SERVICE_NAME} --cluster ${CLUSTER} --region ${REGION} | jq.failures[]`
-                   //	  REVISION=`aws ecs describe-task-definition --task-definition ${NAME} --region ${REGION} | jq.taskDefiniton.revision`
+                    sh "aws ecs register-task-definition --family ${FAMILY} --cli-input-json file://flasktask.json --region ${REGION}"
                // Get latest version
 	       //       REVISION=$(aws ecs describe-task-definition --task-definition ${FAMILY} --region ${REGION} | jq '.taskDefinition.revision')
-		      REVISION = sh (
+		    REVISION = sh (
                             script: "aws ecs describe-task-definition --task-definition ${FAMILY} --region ${REGION} | jq '.taskDefinition.revision'",
                             returnStdout: true
-                      ).trim()
+                    ).trim()
 		   //    echo $REVISION
 		       //    Update service on EC2
                    // sh "aws ecs update-service --cluster ${CLUSTER} --service ecr-ecs-service --task-definition ${TASK_DEF_URN} --region ${REGION}"
-                      sh "aws ecs update-service --cluster ${CLUSTER} --region ${REGION} --service ${SERVICE_NAME} --task-definition ${FAMILY}:${REVISION} --desired-count 1"
+                    sh(returnStdout: true, script: '''#!/bin/bash
+          		if ["$SERVICES" == ""];then
+		          echo "entered existing service"
+	                  DESIRED_COUNT=`aws ecs describe-services --cluster ${CLUSTER} --services ${SERVICE_NAME} | egrep "desiredCount" | tr "/" " " | awk '{print $2}' | sed 's/,$//'  | tail -1`
+	                  if [${DESIRED_COUNT}="0"];then
+	                    DESIRED_COUNT="2"
+	                  fi
+	                    aws ecs update-service --cluster ${CLUSTER} --region ${REGION} --service ${SERVICE_NAME} -- task-definiton ${FAMILY}:${REVISION} --desired-count ${DESIRED_COUNT}
+	                  else
+	                    echo "entered new service"
+	                    aws ecs create-service --service-name ${SERVICE_NAME} --launch-type FARGATE --desired-count 1 --task-definition ${FAMILY} --cluster ${CLUSTER} --region ${REGION}
+                         fi
+                     '''.stripIndent())  
+		 //      sh "aws ecs update-service --cluster ${CLUSTER} --region ${REGION} --service ${SERVICE_NAME} --task-definition ${FAMILY}:${REVISION} --desired-count 1"
                  //     sh "aws ecs create-service --service-name ${SERVICE_NAME} --launch-type FARGATE --desired-count 1 --task-definition ${FAMILY} --cluster ${CLUSTER} --region ${REGION}"
                      
                        // docker.withServer("tcp://172.31.22.94:2375", "dockerserver") {
