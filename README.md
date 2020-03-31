@@ -19,5 +19,10 @@ In aws security groups open the port 2375
 
 2375 is unsecured, 2376 is secured
 
+To update the new taskdefinition and service which is having new image:
+In update-service, --force-new-deployment won't work effectively. So we have to set Minimum health percent - 0.
+
+
+
 
 
