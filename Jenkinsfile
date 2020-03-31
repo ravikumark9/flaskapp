@@ -53,6 +53,11 @@ pipeline {
                             docker.withRegistry("$ECRURL","$ECRCRED") {                            
                                docker.image(IMAGE).pull()                          
                            //    docker.Image.run('-p 81:80')
+                               sh '''#!/bin/bash
+                               a=$(docker ps | grep 8081 | awk '{print $1}')
+                               echo $a
+                               docker stop $a
+                               '''
                                ecrimage = sh(script: 'docker images | awk {\'print $3\'} | head -2 | tail -1', returnStdout: true).trim()
                                sh "docker run -d -p 8081:8081 ${ecrimage}"
                             }
