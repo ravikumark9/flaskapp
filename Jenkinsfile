@@ -5,17 +5,18 @@ pipeline {
     agent any
     environment {
         VERSION = 'latest'
-        PROJECT = 'flaskapp'
-        IMAGE = 'flaskapp:latest'
-        ECRURL = 'http://634335805137.dkr.ecr.us-east-1.amazonaws.com/flaskapp'
+        PROJECT = 'ecr-ecs'
+        IMAGE = 'ecr-ecs:latest'
+        ECRURL = 'http://531165125627.dkr.ecr.us-east-1.amazonaws.com/ecr-ecs'
         ECRCRED = 'ecr:us-east-1:awscred'
+        REGION = "us-east-1" 
     }
     stages {
       stage('Build preparations') {
             steps {
                 script {
                     // calculate GIT lastest commit short-hash
-                    //hi
+                    
                     commit_id = sh(script: "git rev-parse --short HEAD", returnStdout: true).trim()
                     
                     VERSION = "${PROJECT}_${commit_id}"
@@ -43,7 +44,22 @@ pipeline {
                    }
                 }
             }
-    }
+         }
+        stage('Deploy') {
+            steps {
+               script {
+             
+                        docker.withServer("tcp://172.31.22.94:2375", "dockerserver") {
+                            docker.withRegistry("$ECRURL","$ECRCRED") {                            
+                               docker.image(IMAGE).pull()                          
+                               docker.Image.run('-p 81:80')
+                               ecrimage = sh(script: 'docker images | awk {\'print $3\'} | head -2 | tail -1', returnStdout: true).trim()
+                               sh "docker run -d -p 8081:8081 ${ecrimage}"
+                            }
+                   }
+                }
+            }
+       } 
     }
     post {
         always {
