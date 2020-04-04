@@ -60,7 +60,7 @@ pipeline {
                     sh "sed -i 's|{{image}}|${ECRURN}:ecr-ecs_${BUILD_ID}|' flasktask.json"
                //  Create a new task definition revision
                //     sh "aws ecs register-task-definition --execution-role-arn ${EXEC_ROLE_URN} --cli-input-json file://flasktask.json --region ${REGION}"
-                    sh "aws ecs register-task-definition --execution-role-arn ${EXEC_ROLE_URN} --family ${FAMILY} --cli-input-json file://flasktask.json --region ${REGION}"
+                    sh "aws ecs register-task-definition  --family ${FAMILY} --cli-input-json file://flasktask.json --region ${REGION}"
                // Get latest version
 	       //       REVISION=$(aws ecs describe-task-definition --task-definition ${FAMILY} --region ${REGION} | jq '.taskDefinition.revision')
 		    REVISION = sh (
