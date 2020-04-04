@@ -7,7 +7,7 @@ pipeline {
         VERSION = 'latest'
         PROJECT = 'ecr-ecs'
         IMAGE = 'ecr-ecs:latest'
-        ECRURL = 'http://916167090451.dkr.ecr.us-east-1.amazonaws.com/ecr-ecs'
+        ECRURL = 'http://429489393157.dkr.ecr.us-east-1.amazonaws.com/ecr-ecs'
         ECRCRED = 'ecr:us-east-1:awscred'
         REGION = "us-east-1" 
     }
