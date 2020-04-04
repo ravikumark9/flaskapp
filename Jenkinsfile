@@ -71,15 +71,6 @@ pipeline {
 		       sh "aws ecs update-service --force-new-deployment --cluster ${CLUSTER} --region ${REGION} --service ${SERVICE_NAME} --task-definition ${FAMILY}:${REVISION} --desired-count 1"
                   //    sh "aws ecs create-service --service-name ${SERVICE_NAME} --launch-type FARGATE --desired-count 1 --task-definition ${FAMILY} --cluster ${CLUSTER} --region ${REGION}"
                      
-                       // docker.withServer("tcp://172.31.22.94:2375", "dockerserver") {
-                       //     docker.withRegistry("$ECRURL","$ECRCRED") {                            
-                      //         docker.image(IMAGE).pull()
-                            
-                           //          docker.Image.run('-p 81:80')
-                     //          ecrimage = sh(script: 'docker images | awk {\'print $3\'} | head -2 | tail -1', returnStdout: true).trim()
-                     //          sh "docker run -d -p 8081:8081 ${ecrimage}"
-                      //      }
-                  // }
                 }
             }
        } 
