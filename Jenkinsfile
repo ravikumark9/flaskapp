@@ -25,7 +25,6 @@ pipeline {
                     // calculate GIT lastest commit short-hash
                     
                   //  commit_id = sh(script: "git rev-parse --short HEAD", returnStdout: true).trim()
-                 //hi   
                  //   VERSION = "${PROJECT}_${commit_id}"
                   
                     
