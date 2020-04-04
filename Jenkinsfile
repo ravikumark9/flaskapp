@@ -24,12 +24,13 @@ pipeline {
                 script {
                     // calculate GIT lastest commit short-hash
                     
-                    commit_id = sh(script: "git rev-parse --short HEAD", returnStdout: true).trim()
+                  //  commit_id = sh(script: "git rev-parse --short HEAD", returnStdout: true).trim()
                     
-                    VERSION = "${PROJECT}_${commit_id}"
+                 //   VERSION = "${PROJECT}_${commit_id}"
                   
                     
                     //VERSION = "${BUILD_ID}${VERSION}"
+		    VERSION = "${PROJECT}_${BUILD_ID}"
                     IMAGE = "$PROJECT:$VERSION"
                 }
             }
@@ -56,7 +57,7 @@ pipeline {
             steps {
                script {
                //  Override image field in taskdef file
-                    sh "sed -i 's|{{image}}|${ECRURN}:ecr-ecs_${commit_id}|' flasktask.json"
+                    sh "sed -i 's|{{image}}|${ECRURN}:ecr-ecs_${BUILD_ID}|' flasktask.json"
                //  Create a new task definition revision
                //     sh "aws ecs register-task-definition --execution-role-arn ${EXEC_ROLE_URN} --cli-input-json file://flasktask.json --region ${REGION}"
                     sh "aws ecs register-task-definition --execution-role-arn ${EXEC_ROLE_URN} --family ${FAMILY} --cli-input-json file://flasktask.json --region ${REGION}"
