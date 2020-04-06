@@ -26,7 +26,7 @@ pipeline {
                     
                   //  commit_id = sh(script: "git rev-parse --short HEAD", returnStdout: true).trim()
                  //   VERSION = "${PROJECT}_${commit_id}"
-                 // hi 
+                 
                     
                     //VERSION = "${BUILD_ID}${VERSION}"
 		    VERSION = "${PROJECT}_${BUILD_ID}"
